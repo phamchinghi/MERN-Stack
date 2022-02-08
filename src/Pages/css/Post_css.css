@@ -1,0 +1,16 @@
+.baiviet{
+    margin-top: 15px;
+    width: 100%;
+}
+.baiviet a{
+    text-decoration: none;
+}
+.baiviet a:hover{
+    color: orange;
+}
+.hr_lienhe{
+    float: left;
+    border: 2px solid goldenrod;
+    width: 70px;
+    border-radius: 3px;
+  }

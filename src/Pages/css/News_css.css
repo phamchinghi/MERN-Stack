@@ -1,0 +1,70 @@
+.row{
+    display: flex;
+    width: 100%;
+}
+.trai{
+    min-height: 200px;
+    width: 70%;
+    padding-right: 4%;
+}
+.phai{
+    width: 30%;
+}
+.mot_vieclam{
+    padding-top: 20px;
+}
+.hang{
+    display: flex;
+}
+.cot1{
+    width: 10%;
+    display: block;
+}
+.cot2{
+    width: 70%;
+}
+.cot2 a{
+    text-decoration: none;
+}
+.cot2 a:hover{
+    color: red
+}
+.cot3{
+    width: 20%;
+}
+.thoigian{
+    height: 40px;
+    width: 150px;
+    border-radius: 6px ;
+    border: none;
+    background-color: yellow;
+}
+.button{
+    height: 40px;
+    width: 200px;
+    border-radius: 6px ;
+    border: none;
+    background-color: yellow;
+    text-decoration: none;
+    padding: 15px 30px;
+}
+.button:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+.baiviet{
+    margin-top: 15px;
+    width: 100%;
+}
+.baiviet a{
+    text-decoration: none;
+}
+.baiviet a:hover{
+    color: orange;
+}
+.hr_lienhe{
+    float: left;
+    border: 2px solid goldenrod;
+    width: 70px;
+    border-radius: 3px;
+  }
