@@ -7,6 +7,12 @@ import Job from './Pages/Job'
 import News from './Pages/News'
 import Usermanual from './Pages/Usermanual'
 import Cart from './Pages/Cart'
+import Payment_guide from './Pages/Payment_guide';
+import Shopping_guide from './Pages/Shopping_guide'
+import Policy_general from './Pages/Policy_general'
+import Policy_information from './Pages/Policy_information_privacy'
+import Policy_refund from './Pages/Policy_refund'
+import Policy_shipping from './Pages/Policy_shipping'
 
 function App() {
   return (
@@ -63,11 +69,17 @@ function App() {
           <Route path='/cangnangsudung' element={<Usermanual />} />
           <Route path='/tintuc' element={<News />} />
           <Route path='/giohang' element={<Cart />} />
+          <Route path='/huongdanthanhtoan' element={<Payment_guide />} />
+          <Route path='/huongdanmuahang' element={<Shopping_guide />} />
+          <Route path='/chinhsachvaquydinhchung' element={<Policy_general />} />
+          <Route path='/chinhsachvanchuyen' element={<Policy_shipping />} />
+          <Route path='/chinhsachdoitrahang' element={<Policy_refund />} />
+          <Route path='/chinhsachbaomatthongtin' element={<Policy_information />} />
         </Routes>
       </div>
       <div className='footer'>
         <div className='footer-item'>
-          <h4>Liên hệ :</h4>
+          <h4>Liên hệ</h4>
           <hr />
           <ul>
             <li><a href='mailto:dtnsuper@gmail.com'><i class="fas fa-envelope"></i> Contact: dtnsuper@gmail.com</a></li>
@@ -77,22 +89,22 @@ function App() {
           </ul>
         </div>
         <div className='footer-item'>
-          <h4>Trợ giúp nhanh :</h4>
+          <h4>Trợ giúp nhanh</h4>
           <hr />
           <ul>
-            <li><Link to=''><i class="fas fa-chevron-right"></i> Hướng dẫn thành toán</Link></li>
-            <li><Link to=''><i class="fas fa-chevron-right"></i> Hướng dẫn mua hàng</Link></li>
+            <li><Link to='/huongdanthanhtoan'><i class="fas fa-chevron-right"></i> Hướng dẫn thành toán</Link></li>
+            <li><Link to='/huongdanmuahang'><i class="fas fa-chevron-right"></i> Hướng dẫn mua hàng</Link></li>
             <li><Link to='/lienhe'><i class="fas fa-chevron-right"></i> Liên hệ</Link></li>
           </ul>
         </div>
         <div className='footer-item'>
-          <h4>Chính sách bán hàng :</h4>
+          <h4>Chính sách bán hàng</h4>
           <hr />
           <ul>
-            <li><Link to=''><i class="fas fa-chevron-right"></i> Chính sách và quy định chung</Link></li>
-            <li><Link to=''><i class="fas fa-chevron-right"></i> Chính sách vận chuyển</Link></li>
-            <li><Link to=''><i class="fas fa-chevron-right"></i> Chính sách đổi trả hàng</Link></li>
-            <li><Link to=''><i class="fas fa-chevron-right"></i> Chính sách bảo mật thông tin</Link></li>
+            <li><Link to='/chinhsachvaquydinhchung'><i class="fas fa-chevron-right"></i> Chính sách và quy định chung</Link></li>
+            <li><Link to='/chinhsachvanchuyen'><i class="fas fa-chevron-right"></i> Chính sách vận chuyển</Link></li>
+            <li><Link to='/chinhsachdoitrahang'><i class="fas fa-chevron-right"></i> Chính sách đổi trả hàng</Link></li>
+            <li><Link to='/chinhsachbaomatthongtin'><i class="fas fa-chevron-right"></i> Chính sách bảo mật thông tin</Link></li>
           </ul>
         </div>
         <div className='footer-item'>

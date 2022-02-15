@@ -7,9 +7,9 @@
 }
 
 .img-container img {
-    height: 300px;
-  width: 100%;
-  transition: all 1s;
+    height: 100%;
+    width: 100%;
+    transition: all 0.5s;
 }
 
 .img-container:hover img {
