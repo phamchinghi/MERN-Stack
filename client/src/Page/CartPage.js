@@ -4,35 +4,76 @@ import axios from "axios";
 export default function CartPage({ cart, setCart, user }) {
   const navigation = useNavigate();
 
-export default class CartPage extends Component {
-  
-  render() {
-    return (
-      <div className="container">
-        <div className="col-12">
-          <div className="table-responsive">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col"> </th>
-                  <th scope="col">Tên sản phẩm</th>
-                  <th scope="col">Available</th>
-                  <th scope="col" className="text-center">
-                    Số lượng
-                  </th>
-                  <th scope="col" className="text-right">
-                    Giá
-                  </th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="https://dummyimage.com/50x50/55595c/fff" alt="" />
-                  </td>
-                  <td>Product Name Dada</td>
-                  <td>In stock</td>
+  const TongDH = () => {
+    return cart.reduce((sum, { giasp, soluong }) => sum + giasp * soluong, 0);
+  };
+
+  const xoasp = (product) => {
+    setCart(cart.filter((i) => i !== product));
+  };
+  const eventSoLuong = (product, data) => {
+    setCart((cart) =>
+      cart.map((item) =>
+        item._id === product._id
+          ? {
+              ...item,
+              soluong: item.soluong + data,
+            }
+          : item
+      )
+    );
+    if (product.soluong === 0) {
+      setCart(cart.filter((item) => item !== product));
+    }
+  };
+  const xoaCart = () => {
+    setCart([]);
+  };
+  const clickOrder = async () => {
+    if (!user && !user.hoten) {
+      navigation("/dangnhap");
+    }
+    try {
+      const response = await axios.post("http://localhost:5000/order", {
+        items: cart,
+        diachiGiao: user.diachi,
+        giamua: cart.giasp,
+        sdt: user.sdt,
+        email: user.email,
+        tonggia: TongDH(),
+        khachhang: user._id,
+      });
+      console.log(response.data);
+      xoaCart();
+      navigation("/successOrder");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="container">
+      <div className="col-12">
+        <div className="table-responsive">
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Tên sản phẩm</th>
+
+                <th scope="col" className="text-center">
+                  Số lượng
+                </th>
+                <th scope="col" className="text-right">
+                  Giá
+                </th>
+                <th scope="col">Tổng giá sản phẩm</th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((product, i) => (
+                <tr key={i}>
                   <td>
                     <img src={product.hinhanhSP} alt="sản phẩm" width={70} />
                   </td>
