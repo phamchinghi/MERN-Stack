@@ -1,29 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function CartPage({ cart, setCart, user }) {
   const navigation = useNavigate();
-
   const TongDH = () => {
     return cart.reduce((sum, { giasp, soluong }) => sum + giasp * soluong, 0);
   };
-
   const xoasp = (product) => {
     setCart(cart.filter((i) => i !== product));
   };
   const eventSoLuong = (product, data) => {
-    setCart((cart) =>
-      cart.map((item) =>
-        item._id === product._id
-          ? {
-              ...item,
-              soluong: item.soluong + data,
-            }
-          : item
-      )
-    );
-    if (product.soluong === 0) {
-      setCart(cart.filter((item) => item !== product));
+    if (product.soluong < 1) {
+      xoasp(product);
+    } else {
+      setCart((cart) =>
+        cart.map((item) =>
+          item._id === product._id
+            ? {
+                ...item,
+                soluong: item.soluong + data,
+              }
+            : item
+        )
+      );
     }
   };
   const xoaCart = () => {
