@@ -3,15 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import CategoryView from "./CategoryView";
 
-function ProductPage() {
+function ProductPage({ cart, setCart }) {
   const [products, setProducts] = useState([]);
-
-  const { pathName } = useLocation();
-
-  let url = window.location.search;
+  const location = useLocation().search;
+  // let url = window.location.search;
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/sanpham${url}`)
+      .get(`http://localhost:5000/sanpham${location}`)
       .then((res) => {
         console.log(res);
         setProducts(res.data);
@@ -19,12 +17,29 @@ function ProductPage() {
       .catch((err) => {
         console.log(err);
       });
-    console.log(url);
-    console.log(pathName);
-  }, [url, pathName]);
+    console.log("hello: " + location.search);
+  }, [location]);
+
+  const addToCart = (product) => {
+    let cart2 = [...cart];
+
+    let sanpham = cart2.find((item) => product._id === item._id);
+    if (sanpham) {
+      sanpham.soluong++;
+    } else {
+      sanpham = {
+        ...product,
+        soluong: 1,
+      };
+      cart2.push(sanpham);
+    }
+
+    setCart(cart2);
+    console.log(cart);
+  };
 
   return (
-    <div>
+    <div style={{ minWidth: "100%" }}>
       <div className="container">
         <div className="row">
           <div className="col">
@@ -49,10 +64,13 @@ function ProductPage() {
         <div className="col-sm-9">
           <div className="row">
             {/* -- Danh sách sản phẩm -- */}
-            {/* {this.ListSP()} */}
 
             {products.map((item, index) => (
-              <div key={index} className="col-12 col-md-6 col-lg-4">
+              <div
+                key={index}
+                className="col-12 col-md-6 col-lg-4"
+                style={{ minWidth: "260px" }}
+              >
                 <div
                   className="card"
                   style={{ height: "440px", marginBottom: "20px" }}
@@ -69,7 +87,10 @@ function ProductPage() {
                   <div className="card-body">
                     <div>
                       <h6 className="card-title" style={{ fontSize: "13px" }}>
-                        <Link to="" style={{ color: "green" }}>
+                        <Link
+                          to={`/sanpham/${item._id}`}
+                          style={{ color: "green" }}
+                        >
                           {item.tensp}
                         </Link>
                       </h6>
@@ -79,14 +100,17 @@ function ProductPage() {
                         position: "absolute",
                         width: "85%",
                         margin: "auto",
-                        bottom: "0",
+                        bottom: "10px",
                       }}
                     >
                       <p className="btn btn-danger btn-block">
-                        {item.giasp} VNĐ
+                        {item.giasp.toLocaleString()} VNĐ
                       </p>
 
-                      <button className="btn btn-success btn-block">
+                      <button
+                        className="btn btn-success btn-block"
+                        onClick={() => addToCart(item)}
+                      >
                         Thêm giỏ hàng
                       </button>
                     </div>
@@ -98,39 +122,6 @@ function ProductPage() {
                 </div>
               </div>
             ))}
-
-            {/* -- Danh sách sản phẩm -- */}
-            {/* <div className="col-12">
-              <nav aria-label="...">
-                <ul className="pagination">
-                  <li className="page-item disabled">
-                    <a className="page-link" href="#" tabindex="-1">
-                      Trước
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item active">
-                    <a className="page-link" href="#">
-                      2 <span className="sr-only">(current)</span>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      Sau
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div> */}
           </div>
         </div>
       </div>
