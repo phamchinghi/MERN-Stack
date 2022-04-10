@@ -46,6 +46,7 @@ function App() {
             <Route path="/chinhsachdoitrahang" element={<PolicyRefund />} />
             <Route path="/chinhsachvanchuyen" element={<PolicyShipping />} />
             <Route path="/huongdanmuahang" element={<ShoppingGuide />} />
+            {/* <Route path="/sanpham/:id" element={<DetailPage cart={cart} setCart={setCart} />} /> */}
           </Routes>
         </div>
       </div>

@@ -3,23 +3,44 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import CategoryView from "./CategoryView";
 
-function DetailPage() {
-  const params = useParams();
-  console.log(params);
-
+function DetailPage({ cart, setCart }) {
+  const { id } = useParams();
   const [product, setProduct] = useState([]);
+  const [quantity, setQuantity] = useState(0);
 
+  console.log(cart);
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/sanpham/${params.id}`)
-      .then((res) => {
-        console.log(res);
-        setProduct(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [params.id]);
+    const fetchData = async () => {
+      await axios
+        .get(`http://localhost:5000/sanpham/${id}`)
+        .then((res) => {
+          console.log(res.data);
+          setProduct(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+  }, [id]);
+
+  const addToCart = (product, quantity) => {
+    let cart2 = [...cart];
+
+    let sanpham = cart2.find((item) => product._id === item._id);
+    if (sanpham) {
+      sanpham.soluong = quantity;
+    } else {
+      sanpham = {
+        ...product,
+        soluong: quantity,
+      };
+      cart2.push(sanpham);
+    }
+    console.log({ sanpham, cart2 });
+
+    setCart(cart2);
+  };
 
   return (
     <div className="container">
@@ -45,6 +66,7 @@ function DetailPage() {
         <CategoryView />
         {/* -- Category -- */}
         {/* {DetailProduct} */}
+
         <div>
           <div className="row">
             {/* <!-- Image --> */}
@@ -68,12 +90,12 @@ function DetailPage() {
                 <div className="card-body">
                   <h2 style={{ color: "green" }}>{product.tensp}</h2>
                   <div style={{ padding: "10px" }}>
-                    {/* <p className="price">Giá sản phẩm: 150,000 VNĐ</p> */}
-                    <h6>
-                      Giá sản phẩm: <h2>{product.giasp} VNĐ</h2>
-                    </h6>
+                    <h5>
+                      Giá sản phẩm:{" "}
+                      <b>{parseInt(product.giasp).toLocaleString()} VNĐ</b>
+                    </h5>
                   </div>
-                  <form method="get" action="">
+                  <div>
                     <div className="form-group">
                       <label>Số lượng :</label>
 
@@ -81,6 +103,9 @@ function DetailPage() {
                         <div className="input-group-prepend">
                           <button
                             type="button"
+                            onClick={() =>
+                              setQuantity((p) => (p > 0 ? p - 1 : p))
+                            }
                             className="quantity-left-minus btn btn-danger btn-number"
                             data-type="minus"
                             data-field=""
@@ -95,12 +120,14 @@ function DetailPage() {
                           id="quantity"
                           name="quantity"
                           min="1"
-                          max="100"
-                          defaultValue={1}
+                          max="50"
+                          readOnly
+                          value={quantity}
                         />
 
                         <div className="input-group-append">
                           <button
+                            onClick={() => setQuantity((p) => p + 1)}
                             type="button"
                             className="quantity-right-plus btn btn-success btn-number"
                             data-type="plus"
@@ -111,19 +138,19 @@ function DetailPage() {
                         </div>
                       </div>
                     </div>
-                    <a
-                      href="cart.html"
+                    <button
+                      onClick={() => addToCart(product, quantity)}
                       className="btn btn-success btn-lg btn-block text-uppercase"
                     >
                       <i className="fa fa-shopping-cart"></i> Thêm vào giỏ
-                    </a>
+                    </button>
                     <a
-                      href="cadas"
+                      href="/"
                       className="btn btn-primary btn-lg btn-block text-uppercase"
                     >
                       <i className="fa fa-shopping-cart"></i> Mua ngay
                     </a>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
